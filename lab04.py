@@ -1,59 +1,92 @@
 import random
 
-# Step 1: Define Monster's Powers
-defined_powers = {
+# -----------------------------
+# Question 1 – Monster Powers
+# -----------------------------
+monster_powers = {
     "Fire Magic": 2,
     "Freeze Time": 4,
     "Super Hearing": 6
 }
 
-# Step 2: Roll for Monster's Magic Power
-selected_power = random.choice(list(defined_powers.keys()))
-print(f"The monster has rolled the power: {selected_power}")
+# Starting monster combat strength
+m_combat_strength = 2
 
-# Step 3: Update Monster's Combat Strength
-m_combat_strength = random.randint(1, 6)  # Initial random strength
-m_combat_strength += defined_powers[selected_power]
-m_combat_strength = min(6, m_combat_strength)
-print(f"Updated combat strength: {m_combat_strength} (Power: {selected_power})")
+# -----------------------------
+# Question 2 – Roll for Magic
+# -----------------------------
+input("Press Enter to roll for the monster's magic power...")
 
-# Step 4: Define Loot Belt
+rolled_power = random.choice(list(monster_powers.keys()))
+print("Monster rolled:", rolled_power)
+
+# -----------------------------
+# Question 3 – Update Combat Strength
+# -----------------------------
+m_combat_strength += monster_powers[rolled_power]
+
+# Ensure max combat strength is 6
+m_combat_strength = min(m_combat_strength, 6)
+
+print("Updated monster combat strength:", m_combat_strength)
+
+# -----------------------------
+# Question 4 – Loot Setup
+# -----------------------------
+loot_options = ["Potion", "Sword", "Shield", "Poison", "Rock"]
+good_loot = ["Potion", "Shield"]
+bad_loot = ["Poison"]
+
 belt = []
-loot_options = ["Health Potion", "Poison Potion", "Secret Note", "Leather Boots", "Flimsy Gloves"]
 
-good_loot_options = ["Health Potion", "Leather Boots"]
-bad_loot_options = ["Poison Potion"]
+health_points = 4
 
-# Step 5: Collect First Loot Item
-print("You have found a loot bag!")
-input("Press Enter to roll for the first loot item.")
-loot_item = loot_options.pop(random.randint(0, len(loot_options) - 1))
-belt.append(loot_item)
-print(f"Added {loot_item} to your belt. Current belt: {belt}")
+# -----------------------------
+# Question 5 – First Loot Item
+# -----------------------------
+print("\nYou found a loot bag!")
+input("Press Enter to roll for your first item...")
 
-# Step 6: Collect Second Loot Item
-input("Press Enter to roll for the second loot item.")
-loot_item = loot_options.pop(random.randint(0, len(loot_options) - 1))
-belt.append(loot_item)
-print(f"Added {loot_item} to your belt. Current belt: {belt}")
+item1 = random.choice(loot_options)
+loot_options.pop(loot_options.index(item1))
+belt.append(item1)
 
-# Step 7: Organize the Loot Belt
-print("Organizing the belt alphabetically...")
+print("Belt now contains:", belt)
+
+# -----------------------------
+# Question 6 – Second Loot Item
+# -----------------------------
+input("\nPress Enter to roll for your second item...")
+
+item2 = random.choice(loot_options)
+loot_options.pop(loot_options.index(item2))
+belt.append(item2)
+
+print("Belt now contains:", belt)
+
+# -----------------------------
+# Question 7 – Organize Belt
+# -----------------------------
+print("\nOrganizing belt alphabetically...")
 belt.sort()
-print(f"Organized belt: {belt}")
+print("Organized belt:", belt)
 
-# Step 8: Use the First Loot Item
-health_points = random.randint(1, 6)  # Initial player health
-if belt:
-    print("You see a monster in the distance. Use the first item in your belt!")
-    used_item = belt.pop(0)
-    if used_item in good_loot_options:
-        health_points = min(6, health_points + 2)
-        print(f"Used {used_item}. Health increased to {health_points}.")
-    elif used_item in bad_loot_options:
-        health_points = max(0, health_points - 2)
-        print(f"Used {used_item}. Health decreased to {health_points}.")
-    else:
-        print(f"Used {used_item}. It was not helpful.")
+# -----------------------------
+# Question 8 – Use First Loot
+# -----------------------------
+print("\nYou see a monster in the distance!")
+print("Using first item in your belt...")
+
+used_item = belt.pop(0)
+print("Used item:", used_item)
+
+if used_item in good_loot:
+    health_points += 2
+    health_points = min(health_points, 6)
+elif used_item in bad_loot:
+    health_points -= 2
+    health_points = max(health_points, 0)
 else:
-    print("Your belt is empty!")
+    print("Item was not helpful.")
+
+print("Player health points:", health_points)
